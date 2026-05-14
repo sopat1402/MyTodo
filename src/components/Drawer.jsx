@@ -1,14 +1,14 @@
 import React from "react";
 
-function addFolder(name){
-    return <button>{name}</button>
+function addFolder(folder){
+    return <button>{folder.name}</button>
 }
 function Folderlist(props){
     return (
-        <div className="w-full h-[50%] flex flex-col bg-[#3B7597]">
-            <h2>Folders</h2>
+        <div className="w-full flex flex-col bg-[#3B7597] fixed bottom-[10%] left-0">
+            <h2 className="text-center">Folders</h2>
             <hr/>
-            {props.folders.map(addFolder)}
+            {props.folders.map((folder) => addFolder(folder))}
         </div>
     )
 }
