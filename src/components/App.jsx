@@ -16,11 +16,12 @@ function App(props) {
   const [isdrawerOpen,setisdrawerOpen]=useState(false);
   const [folders,setFolders]=useState([]);
   useEffect(()=>{
-    fetch("/api/folders")
+    fetch("/api/folders",{
+      credentials:"include",
+    })
     .then(result=>result.json())
     .then(data=>{
       setFolders(data);
-      console.log(folders);
     })
   },[])
   return (
@@ -29,8 +30,8 @@ function App(props) {
         <Navbar/>
         <Sidebar folders={folders} setisAuth={props.setisAuth}/>
           <Routes>
-            <Route path="/" element={<List listName={today.name} tasks={today.tasks} setActiveTask={setactiveTask}/>}/>
-            {folders.map((folder)=><Route path={`/folder/${folder.id}`} element={<List listName={folder.name} id={folder.id} setActiveTask={setactiveTask}/>}/>)}
+            <Route path="/" element={<List folders={folders} setActiveTask={setactiveTask}/>} />
+            <Route path="/folder/:id" element={<List folders={folders} setActiveTask={setactiveTask}/>}/>
           </Routes>
         {activeTask!==null?<Rightbar task={activeTask} setActiveTask={setactiveTask}/>:null}
         {isdrawerOpen?<Drawer folders={folders}/>:null}
