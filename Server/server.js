@@ -47,7 +47,7 @@ app.get("/api/me",(req,res)=>{
             user:req.user
         });
     }else{
-        return res.status(401).json({authenticated:false});
+        return res.json({authenticated:false});
     }
 });
 app.get("/api/folder/:id",ensureAuth,async (req,res)=>{
@@ -170,10 +170,12 @@ app.patch("/folder/:id",ensureAuth,async (req,res)=>{
 //Auth handling
 
 app.post("/register",async (req,res)=>{
-    const {username,email,password}=req.body;
+    const username=req.body.username;
+    const email=req.body.email;
+    const password=req.body.password;
     const exists=await db.query("SELECT * FROM users WHERE username=$1 OR email=$2",[username,email]);
     if (exists.rows.length>0){
-        return res.send("Username or email already in use.");
+        return res.json({message:"Username or email already in use."});
     }
     bcrypt.hash(password,saltRounds,async (err,hash)=>{
         if (err){
@@ -187,7 +189,7 @@ app.post("/register",async (req,res)=>{
             if (err){
                 console.log(err);
             }else{
-                res.json({id:user.id,username:user.username,email:user.email});
+                res.json({id:user.id,username:user.username,email:user.email,authenticated:true});
             }
         });
     });
@@ -210,7 +212,6 @@ app.post("/login", (req, res, next) => {
 
             return res.json({
                 authenticated: true,
-                user
             });
         });
     })(req, res, next);
