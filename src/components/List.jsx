@@ -2,6 +2,7 @@ import {useState,useEffect} from "react";
 import {useParams} from "react-router-dom";
 import Task from "./Task";
 import Add from "./Add";
+import Rightbar from "./Rightbar.jsx";
 
 function onTaskClick(task,setActiveTask){
   setActiveTask(task);
@@ -9,6 +10,7 @@ function onTaskClick(task,setActiveTask){
 function List(props){
     const [tasks,setTasks]=useState([]);
     const params=useParams();
+    const [activeTask,setactiveTask]=useState(null);
     let folderId;
     if (!params.id) {
         folderId=props.folders[0]?.id
@@ -38,12 +40,14 @@ function List(props){
                     (task)=><Task 
                         task={task} 
                         onTaskClick={onTaskClick} 
-                        setActiveTask={props.setActiveTask} 
+                        setActiveTask={setactiveTask} 
                         key={task.id}
+                        setTasks={setTasks}
                     />
                 )
             }
             <Add setTasks={setTasks} folderId={folderId}/>
+            {activeTask!==null?<Rightbar taskId= {activeTask.id} tasks={tasks} setActiveTask={setactiveTask} folderId={folderId} setTasks={setTasks}/>:null}
         </div>
     )
 }

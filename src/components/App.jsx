@@ -4,14 +4,11 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import Sidebar from "./Sidebar.jsx";
 import Footer from "./Footer.jsx";
-import Rightbar from "./Rightbar.jsx";
 import List from "./List.jsx";
 import Drawer from "./Drawer.jsx";
 
 
 function App(props) {
-
-  const [activeTask,setactiveTask]=useState(null);
   const [currentList,setcurrentList]=useState("Today");
   const [isdrawerOpen,setisdrawerOpen]=useState(false);
   const [folders,setFolders]=useState([]);
@@ -30,10 +27,9 @@ function App(props) {
         <Navbar/>
         <Sidebar folders={folders} setisAuth={props.setisAuth}/>
           <Routes>
-            <Route path="/" element={<List folders={folders} setActiveTask={setactiveTask}/>} />
-            <Route path="/folder/:id" element={<List folders={folders} setActiveTask={setactiveTask}/>}/>
+            <Route path="/" element={<List folders={folders}/>} />
+            <Route path="/folder/:id" element={<List folders={folders}/>}/>
           </Routes>
-        {activeTask!==null?<Rightbar task={activeTask} setActiveTask={setactiveTask}/>:null}
         {isdrawerOpen?<Drawer folders={folders}/>:null}
         <Footer setisdrawerOpen={setisdrawerOpen}/>
       </BrowserRouter>

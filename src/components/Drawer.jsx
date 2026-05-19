@@ -1,7 +1,7 @@
 import React from "react";
 
 function addFolder(folder){
-    return <button className="hover:cursor-pointer" key={folder.key}>{folder.name}</button>
+    return <button className="hover:cursor-pointer" key={folder.id}>{folder.name}</button>
 }
 function Folderlist(props){
     return (

@@ -96,10 +96,11 @@ app.post("/api/addFolder",ensureAuth,async (req,res)=>{
     res.sendStatus(200);
 });
 
-app.delete("/api/deleteTask",ensureAuth,async (req,res)=>{
+app.delete("/api/deleteTask/:id",ensureAuth,async (req,res)=>{
     const userId=req.user.id;
-    const taskId=req.body.taskId;
-    const folderId=req.body.folderId;
+    const taskId=req.params.id;
+    const folder=await db.query("SELECT folder_id FROM tasks WHERE id=$1",[taskId]);
+    const folderId=folder.rows[0].folder_id;
     const membership=await db.query("SELECT folder_id FROM folder_members WHERE folder_id=$1 AND user_id=$2",[folderId,userId]);
     if (membership.rows.length===0) return res.sendStatus(403);
     await db.query("DELETE FROM tasks WHERE id=$1 AND folder_id=$2",[taskId,folderId]);
@@ -153,7 +154,7 @@ app.patch("/api/task/:id",ensureAuth,async (req,res)=>{
     }
     const query = `UPDATE tasks SET ${updates.join(", ")}  WHERE id=$${values.length-1} AND folder_id=$${values.length}`;
     await db.query(query, values);
-    return res.sendStatus(200);
+    return res.json({message:"edited successfully"});
 });
 app.patch("/folder/:id",ensureAuth,async (req,res)=>{
     const userId=req.user.id;
