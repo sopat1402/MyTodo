@@ -30,7 +30,7 @@ function AddTask(props){
         <form className="rounded-md w-[max(30%,250px)] fixed z-10 bg-[#3B7597] right-[7.5vw] bottom-[12%] h-[400px] p-5 flex flex-col space-y-2" onSubmit={handleSubmit} >
             <h1 className="text-center mb-3 text-xl">Add a task</h1>
             <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} className="border-[white] rounded-md my-2 h-[40px] px-3"/>
-            <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleChange} className="border-[white] rounded-md my-2 h-[40px] px-3"/>
+            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} className="border-[white] rounded-md my-2 h-[40px] px-3"/>
             <button type="submit" className="hover:cursor-pointer mt-4">Add task</button>
             <button type="button" onClick={()=>props.setAdding(false)} className="hover:cursor-pointer absolute bottom-[15px] right-[10px]" >Cancel</button>
         </form>

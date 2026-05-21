@@ -5,12 +5,10 @@ import Navbar from "./Navbar.jsx";
 import Sidebar from "./Sidebar.jsx";
 import Footer from "./Footer.jsx";
 import List from "./List.jsx";
-import Drawer from "./Drawer.jsx";
 
 
 function App(props) {
   const [currentList,setcurrentList]=useState("Today");
-  const [isdrawerOpen,setisdrawerOpen]=useState(false);
   const [folders,setFolders]=useState([]);
   useEffect(()=>{
     fetch("/api/folders",{
@@ -30,8 +28,8 @@ function App(props) {
             <Route path="/" element={<List folders={folders} setFolders={setFolders} />} />
             <Route path="/folder/:id" element={<List folders={folders} setFolders={setFolders} />}/>
           </Routes>
-        {isdrawerOpen?<Drawer folders={folders}/>:null}
-        <Footer setisdrawerOpen={setisdrawerOpen}/>
+        
+        <Footer folders={folders} setFolders={setFolders}/>
       </BrowserRouter>
     </>
   )

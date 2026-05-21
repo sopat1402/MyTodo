@@ -2,10 +2,9 @@ import React from 'react'
 
 function Task(props) {
     return (
-        <div className="relative sm:w-[50vw] w-[75vw] h-[8vh] bg-[#5DF8D8] flex items-center px-4 rounded-md h-[min(10vh,50px)] mt-[10px] sm:ml-10 ml-5 flex flex-row space-x-3 border-1 border-[#3B7597] hover:cursor-pointer" onClick={() => props.onTaskClick(props.task, props.setActiveTask)}>
-            <input type="checkbox" checked={props.task.completed} className="w-5 h-5" 
+        <div className="relative z-0 sm:w-[50vw] w-[75vw] h-[8vh] bg-[#5DF8D8] flex items-center px-4 rounded-md h-[min(10vh,50px)] mt-[10px] sm:ml-10 ml-5 flex flex-row space-x-3 border-1 border-[#3B7597] hover:cursor-pointer" onClick={() => props.onTaskClick(props.task, props.setActiveTask)}>
+            <input type="checkbox" checked={props.task.completed} className="w-5 h-5" onClick={(e)=>{e.stopPropagation();}}
                 onChange={(e)=>{
-                    e.stopPropagation();
                     fetch(`/api/task/${props.task.id}`,{
                         method:"PATCH",
                         headers:{'Content-Type':'application/json'},
