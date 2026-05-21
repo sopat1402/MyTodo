@@ -21,17 +21,16 @@ function List(props){
         folderId=params.id;
         folderId[0]==':'?folderId=folderId.substring(1):folderId=folderId;
     }
-    const [listName,setlistName]=useState("");
+    const folder=props.folders.find(folder=>folder.id==folderId);
     useEffect(()=>{
         if (!folderId) return;
         fetch(`/api/folder/${folderId}`)
         .then(result=>result.json())
         .then(data=>{
             setTasks(data);
-            setlistName(folder.name);
         })
     },[folderId])
-    const folder=props.folders.find(folder=>folder.id==folderId);
+    const listName=folder?.name||"";
     if (!folder) return <div>Loading...</div>
     return (
         <div className="md:w-[100%] w-[100vw] sm:h-[100vh] bg-[#6FD1D7] mt-[10vh] sm:ml-40 flex flex-col py-4 h-[80vh]">
@@ -67,7 +66,7 @@ function List(props){
             }
             <Add setTasks={setTasks} folderId={folderId}/>
             {activeTask!==null?<Rightbar taskId= {activeTask.id} tasks={tasks} setActiveTask={setactiveTask} folderId={folderId} setTasks={setTasks}/>:null}
-            {editingFolder?<EditFolder listName={listName} setlistName={setlistName} seteditingFolder={seteditingFolder} setFolders={props.setFolders} />:null}
+            {editingFolder?<EditFolder listName={listName} folderId={folderId} seteditingFolder={seteditingFolder} setFolders={props.setFolders} />:null}
         </div>
     )
 }

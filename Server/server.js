@@ -44,7 +44,9 @@ app.get("/api/me",(req,res)=>{
     if (req.isAuthenticated()){
         return res.json({
             authenticated:true,
-            user:req.user
+            username:req.user.username,
+            email:req.user.email,
+            id:req.user.id,
         });
     }else{
         return res.json({authenticated:false});
@@ -265,7 +267,7 @@ passport.serializeUser((user,cb)=>{
 });
 passport.deserializeUser(async (id,cb)=>{
     try{
-        const result=await db.query("SELECT id,username FROM users WHERE id=$1",[id]);
+        const result=await db.query("SELECT id,username,email FROM users WHERE id=$1",[id]);
         cb(null,result.rows[0]);
     }catch(err){
         cb(err);

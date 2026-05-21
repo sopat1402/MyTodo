@@ -19,7 +19,6 @@ function EditFolder(props){
         })
         .then(()=>{
             props.seteditingFolder(false);
-            props.setlistName(formData.name);
             props.setFolders(prev =>
                 prev.map(folder =>
                     folder.id === props.folderId

@@ -24,11 +24,11 @@ function AddFolder(props){
         })
     }
     return (
-        <form className="rounded-md w-[max(30%,250px)] fixed z-100 bg-[#3B7597] mx-auto right-[7.5vw] bottom-[12%] h-[400px] p-5 flex flex-col space-y-2 border-white border" onSubmit={handleSubmit} >
+        <form className="rounded-md w-[max(30%,250px)] fixed z-50 bg-[#3B7597] right-[7.5vw] bottom-[12%] h-[400px] p-5 flex flex-col space-y-2 border-white border" onSubmit={handleSubmit} >
             <h1 className="text-center mb-3 text-xl">Add folder</h1>
             <input type="text" name="name" placeholder="Name" value={formData.folderName} onChange={handleChange} className="border-[white] rounded-md my-2 h-[40px] px-3"/>
             <button type="submit" className="hover:cursor-pointer mt-4">Add Folder</button>
-            <button type="button" onClick={()=>props.setaddFolder(false)} className="hover:cursor-pointer absolute bottom-[15px] right-[10px]" >Cancel</button>
+            <button type="button" onClick={()=>props.setaddFolder(false)} className="z-50 hover:cursor-pointer absolute bottom-[15px] right-[10px]" >Cancel</button>
         </form>
     )
 }
