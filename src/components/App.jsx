@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useContext} from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import Navbar from "./Navbar.jsx";
@@ -25,7 +25,7 @@ function App(props) {
     <>
       <BrowserRouter>
         <Navbar/>
-        <Sidebar folders={folders} setisAuth={props.setisAuth} setFolders={setFolders} />
+        <Sidebar folders={folders} setFolders={setFolders} />
           <Routes>
             <Route path="/" element={<List folders={folders} setFolders={setFolders} />} />
             <Route path="/folder/:id" element={<List folders={folders} setFolders={setFolders} />}/>
@@ -37,4 +37,4 @@ function App(props) {
   )
 }
 
-export default App
+export default App;

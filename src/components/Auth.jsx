@@ -7,7 +7,7 @@ import { BrowserRouter,Routes,Route,Link } from "react-router-dom";
 function Auth(props){
     const [hasAccount,sethasAccount]=useState(true);
     return <>
-        {hasAccount?<Login sethasAccount={sethasAccount} setisAuth={props.setisAuth}/>:<Signup sethasAccount={sethasAccount} setisAuth={props.setisAuth}/>}
+        {hasAccount?<Login sethasAccount={sethasAccount}/>:<Signup sethasAccount={sethasAccount}/>}
     </>
 }
 

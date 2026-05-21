@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Navbar from "./Navbar"
+import { AuthContext } from "../Root";
 
 function swap(sethasAccount){
     sethasAccount(true);
@@ -10,6 +11,7 @@ function Signup(props){
     const handleChange=(e)=>{
         setformData({...formData,[e.target.name]:e.target.value});
     }
+    const {setUser}=useContext(AuthContext);
     const handleSubmit=(e)=>{
         e.preventDefault();
         fetch("/register",{
@@ -26,7 +28,7 @@ function Signup(props){
         })
         .then(result=>result.json())
         .then(data=>{
-            if (data.authenticated) props.setisAuth(true);
+            if (data.authenticated) setUser(data);
             else alert(data.message);
         })
     }
