@@ -93,7 +93,7 @@ app.post("/api/addFolder",ensureAuth,async (req,res)=>{
     const folderName=req.body.folderName;
     const folderId=await db.query("INSERT INTO folders (name,creator_id) VALUES ($1,$2) RETURNING id",[folderName,userId]);
     await db.query("INSERT INTO folder_members (folder_id,user_id) VALUES ($1,$2)",[folderId.rows[0].id,userId]);
-    res.sendStatus(200);
+    res.status(200).json({id:folderId});
 });
 
 app.delete("/api/deleteTask/:id",ensureAuth,async (req,res)=>{
@@ -119,6 +119,7 @@ app.delete("/api/deleteFolder/:id",ensureAuth,async (req,res)=>{   //Only if cre
     }
     else{
         await db.query("DELETE FROM folder_members WHERE folder_id=$1",[folderId]);
+        await db.query("DELETE FROM tasks WHERE folder_id=$1",[folderId])
         await db.query("DELETE FROM folders WHERE id=$1",[folderId]); //didn't add the on delete cascade so doing it manually as this would happen on the interface anyways with cascade
         return res.sendStatus(204);
     }
@@ -156,7 +157,7 @@ app.patch("/api/task/:id",ensureAuth,async (req,res)=>{
     await db.query(query, values);
     return res.json({message:"edited successfully"});
 });
-app.patch("/folder/:id",ensureAuth,async (req,res)=>{
+app.patch("/api/folder/:id",ensureAuth,async (req,res)=>{
     const userId=req.user.id;
     const folderId=req.params.id;
     const name=req.body.name;

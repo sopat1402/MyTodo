@@ -25,10 +25,10 @@ function App(props) {
     <>
       <BrowserRouter>
         <Navbar/>
-        <Sidebar folders={folders} setisAuth={props.setisAuth}/>
+        <Sidebar folders={folders} setisAuth={props.setisAuth} setFolders={setFolders} />
           <Routes>
-            <Route path="/" element={<List folders={folders}/>} />
-            <Route path="/folder/:id" element={<List folders={folders}/>}/>
+            <Route path="/" element={<List folders={folders} setFolders={setFolders} />} />
+            <Route path="/folder/:id" element={<List folders={folders} setFolders={setFolders} />}/>
           </Routes>
         {isdrawerOpen?<Drawer folders={folders}/>:null}
         <Footer setisdrawerOpen={setisdrawerOpen}/>
